@@ -45,6 +45,20 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Book updateBook(Book book, Long bookId) {
+        Optional<Book> foundBook = bookRepository.findById(bookId);
+        if (foundBook.isPresent()) {
+            logger.info("Updating Book with: {}", book);
+            foundBook.get().setTitle(book.getTitle());
+            foundBook.get().setAuthor(book.getAuthor());
+            foundBook.get().setPublisher(book.getPublisher());
+            return saveBook(foundBook.get());
+        } else {
+            return saveBook(book);
+        }
+    }
+
+    @Override
     public List<Book> findAllBooks() {
         return bookRepository.findAll();
     }

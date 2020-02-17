@@ -74,25 +74,7 @@ public class BookController {
      */
     @PutMapping(value = "/{bookId}")
     public ResponseEntity<?> updateBook(@RequestBody Book newBook, @PathVariable("bookId") Long bookId) {
-        // Get Book and update, else create a new Book
-        Book book;
-        try {
-            book = bookService.findBookById(bookId);
-
-            logger.info("Updating Book with: {}", newBook);
-            book.setTitle(newBook.getTitle());
-            book.setAuthor(newBook.getAuthor());
-            book.setPublisher(newBook.getPublisher());
-        }
-        catch (ResourceNotFoundException e) {
-            book = new Book();
-            book.setId(bookId);
-            book.setTitle(newBook.getTitle());
-            book.setAuthor(newBook.getAuthor());
-            book.setPublisher(newBook.getPublisher());
-        }
-
-        return new ResponseEntity<>(bookService.saveBook(book), HttpStatus.OK);
+        return new ResponseEntity<>(bookService.updateBook(newBook, bookId), HttpStatus.OK);
     }
 
     /**
