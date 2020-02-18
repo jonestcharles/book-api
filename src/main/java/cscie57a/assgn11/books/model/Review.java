@@ -1,7 +1,6 @@
 package cscie57a.assgn11.books.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class Review {
