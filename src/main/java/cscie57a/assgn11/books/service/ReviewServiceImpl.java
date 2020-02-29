@@ -6,6 +6,7 @@ import cscie57a.assgn11.books.repository.ReviewRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,8 +19,8 @@ public class ReviewServiceImpl implements ReviewService {
     private ReviewRepository reviewRepository;
 
     @Override
-    public void deleteReview(Long reviewId) {
-        if (reviewRepository.existsById(reviewId)) {
+    public void deleteReview(Long reviewId, Long bookId) {
+        if(reviewRepository.findByIdAndBookId(reviewId, bookId).isPresent()) {
             reviewRepository.deleteById(reviewId);
         } else {
             logger.error("cannot delete Review because ID does not exist");
@@ -28,8 +29,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review findReviewById(Long reviewId) throws ResourceNotFoundException {
-        Optional<Review> review = reviewRepository.findById(reviewId);
+    public Review findReviewById(Long reviewId, Long bookId) throws ResourceNotFoundException {
+        Optional<Review> review = reviewRepository.findByIdAndBookId(reviewId, bookId);
         if (review.isPresent()) {
             return review.get();
         }
