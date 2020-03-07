@@ -19,7 +19,7 @@ public class ReviewServiceImpl implements ReviewService {
     private ReviewRepository reviewRepository;
 
     @Override
-    public void deleteReview(Long reviewId, Long bookId) {
+    public void deleteReview(Long reviewId, Long bookId) throws ResourceNotFoundException {
         if(reviewRepository.findByIdAndBookId(reviewId, bookId).isPresent()) {
             reviewRepository.deleteById(reviewId);
         } else {

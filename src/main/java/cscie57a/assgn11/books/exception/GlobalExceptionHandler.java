@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
             return handleBookDeletionException(bde, headers, status, request);
         }
         else if (ex instanceof ResourceNotFoundException) {
-            HttpStatus status = HttpStatus.BAD_REQUEST;
+            HttpStatus status = HttpStatus.NOT_FOUND;
             ResourceNotFoundException rnfe = (ResourceNotFoundException) ex;
 
             return handleResourceNotFoundException(rnfe, headers, status, request);
@@ -64,8 +64,10 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ApiError> handleBookDeletionException(BookDeletionException bde,
                                                                    HttpHeaders headers, HttpStatus status,
                                                                    WebRequest request) {
-        String error = bde.getMessage();
-        return handleExceptionInternal(bde, new ApiError(status, error, error), headers, status, request);
+        String error = status.getReasonPhrase();
+        String message = bde.getMessage();
+        String path = request.getDescription(false);
+        return handleExceptionInternal(bde, new ApiError(status.value(), message, error, path), headers, status, request);
     }
 
     /**
@@ -80,8 +82,10 @@ public class GlobalExceptionHandler {
                                                                         HttpHeaders headers,
                                                                         HttpStatus status,
                                                                         WebRequest request) {
-        String error = enfe.getMessage();
-        return handleExceptionInternal(enfe, new ApiError(status, error, error), headers, status, request);
+        String error = status.getReasonPhrase();
+        String message = enfe.getMessage();
+        String path = request.getDescription(false);
+        return handleExceptionInternal(enfe, new ApiError(status.value(), message, error, path), headers, status, request);
     }
 
     /**
