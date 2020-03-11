@@ -1,7 +1,5 @@
 package cscie57a.assgn11.books.exception;
 
-import org.springframework.http.HttpStatus;
-
 import java.time.LocalDateTime;
 
 public class ApiError {

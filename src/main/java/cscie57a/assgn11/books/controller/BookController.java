@@ -1,9 +1,6 @@
 package cscie57a.assgn11.books.controller;
 
-import cscie57a.assgn11.books.exception.BookDeletionException;
-import cscie57a.assgn11.books.exception.ResourceNotFoundException;
 import cscie57a.assgn11.books.model.Book;
-import cscie57a.assgn11.books.model.Review;
 import cscie57a.assgn11.books.service.BookService;
 import cscie57a.assgn11.books.service.ReviewService;
 import org.slf4j.Logger;
@@ -14,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
